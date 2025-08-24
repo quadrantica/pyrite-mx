@@ -1,0 +1,18 @@
+[project]
+name = "pyrite-mx"
+version = "0.1.0"
+description = "Pyrite-MX: Focus only on what truly matters. No boilerplate. No distractions."
+authors = [{ name = "Sauro Abbondanzieri" }]
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.7"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project.urls]
+"Repository" = "https://github.com/quadrantica/pyrite-mx.git"
+
+

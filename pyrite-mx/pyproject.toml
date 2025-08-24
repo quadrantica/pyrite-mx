@@ -1,0 +1,12 @@
+[project]
+name = "pyrite-mx"
+version = "0.1.0"
+description = "Modular GUI framework built on the Pyrite architecture."
+authors = [{ name = "Sauro Abbondanzieri" }]
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
