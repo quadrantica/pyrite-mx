@@ -21,7 +21,7 @@ Pyrite-MX is a modular framework designed to help developers and thinkers  **foc
 
 The architecture is built around a set of core modules:
 
-* `pyrite.monolith`: foundational elements like `@element`, `@routine`, and context propagation.
+* `pyrite.monolith`: foundational elements like `@element`, `@routine`, and context propagation (see [Monolith.md](./Monolith.md)).
 * `pyrite.attract`: a GTD-inspired system with seven lenses— **Areas** ,  **Topics** ,  **Tasks** ,  **Records** ,  **Activities** ,  **Channels** , and  **Trays** —to organize and correlate information.
 * `pyrite.gui`, `pyrite.tui`, `pyrite.webui`: interface layers for different interaction modes.
 
