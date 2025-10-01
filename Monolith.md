@@ -110,7 +110,7 @@ This coexistence allows developers to retain flow logic while expressing structu
 
 ## Rooted in Python
 
-Monolith operates entirely within Python’s ecosystem. It uses standard decorators and functions, supports familiar tooling (IDEs, linters, debuggers), and integrates with existing codebases. Developers maintain full control over behavior and composition while gaining a new way to express structure.
+Monolith operates entirely within Python’s ecosystem. It uses standard decorators and functions and integrates with existing codebases. Developers maintain full control over behavior and composition while gaining a new way to express structure.
 
 This alignment with Python may support gradual adoption and seamless integration into diverse projects.
 
