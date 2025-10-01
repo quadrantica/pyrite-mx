@@ -10,10 +10,10 @@ In software and systems design, structure often carries meaning. Whether modelin
 
 Monolith encourages a style of programming where structure becomes a visible part of the codebase. Several principles support this approach:
 
-* **Declarative nesting** : Functions decorated with `@element`, `@section`, `@cluster`, or `@feature` form nodes in a graph. The nesting of these functions reveals hierarchy and relationships, making structure directly observable.
-* **Scoped inheritance** : Each node carries contextual information that flows through the graph and can be refined locally. This may support consistent behavior across nested scopes while allowing local specialization.
-* **Inline modularity** : Graphs can span multiple files using standard Python imports. This possibility allows systems to grow modularly while preserving cohesion and readability.
-* **Cross-node relationships** : Nodes may reference one another, enabling overlays, extensions, and alternate views. These relationships can enrich the graph and support flexible composition.
+* **Declarative nesting**: Functions decorated with `@element`, `@section`, `@cluster`, or `@feature` form nodes in a graph. The nesting of these functions reveals hierarchy and relationships, making structure directly observable.
+* **Scoped inheritance**: Each node carries contextual information that flows through the graph and can be refined locally. This may support consistent behavior across nested scopes while allowing local specialization.
+* **Inline modularity**: Graphs can span multiple files using standard Python imports. This possibility allows systems to grow modularly while preserving cohesion and readability.
+* **Cross-node relationships**: Nodes may reference one another, enabling overlays, extensions, and alternate views. These relationships can enrich the graph and support flexible composition.
 
 Through these principles, Monolith offers a way to express architecture and context directly in code, potentially improving maintainability and semantic clarity.
 
@@ -141,4 +141,4 @@ Whether in firmware, simulation, education, or semantic modeling, Monolith provi
 
 For those with curiosity, patience, and skill, here lies a slightly usable  **Monolith** —open to meaningful experimentation.
 
-> **Pyrite-MX** : *Focus only on what truly matters. No boilerplate. No distractions.*
+> **Pyrite-MX**: *Focus only on what truly matters. No boilerplate. No distractions.*
