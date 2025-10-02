@@ -132,12 +132,11 @@ Whether in firmware, simulation, education, or semantic modeling, Monolith provi
 
 ---
 
-
 ## A Quiet Opening for the Patient Builder
 
 **Monolith** has now taken its first public step within the **Pyrite-MX** framework, available on [GitHub](https://github.com/quadrantica/pyrite-mx) and [PyPI](https://pypi.org/project/pyrite-mx/).
 
-**Pyrite-MX** is an early-stage alpha of an ambitious umbrella framework, shaped by many design requirements and conceptual directions.
+**Pyrite-MX** is an ambitious umbrella framework, shaped by many design requirements and conceptual directions,  currently in pre-alpha stage.
 
 For those with curiosity, patience, and skill, here lies a slightly usable  **Monolith** —open to meaningful experimentation.
 
