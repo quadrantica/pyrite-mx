@@ -1,6 +1,6 @@
 [project]
 name = "pyrite-mx"
-version = "0.1.3"
+version = "0.1.4"
 description = "Pyrite-MX: Focus only on what truly matters. No boilerplate. No distractions."
 authors = [{ name = "Sauro Abbondanzieri" }]
 license = "Apache-2.0"

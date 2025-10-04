@@ -327,7 +327,7 @@ def pathname_complete(spec:str, default=None, options=[]):
             for item, item_c, path in ld_c:
                 if item_c.startswith(spec_k):
                     matches += 1
-                    if spec_k == spec_c:
+                    if spec_k == spec_c or item == spec_c:
                         result_list.append(path)
                     if os.path.isdir(path):
                         ld_p.append((path,spec_k))
