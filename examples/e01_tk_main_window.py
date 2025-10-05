@@ -2,6 +2,15 @@ from pyrite.monolith import element, section, routine
 from pyrite.monolith.layers import tk
 
 
+'''
+Examples of Monolith with Tkinter layer
+Examples are inspired by https://realpython.com/python-gui-tkinter/#creating-a-simple-application-with-tkinter
+More Tkinter widgets: https://docs.python.org/3/library/tkinter.ttk.html#widget-classes
+More Tkinter layouts: https://docs.python.org/3/library/tkinter
+All examples are orgnaized in sections, so you can run them one at a time by uncommenting the call at the bottom of this file.
+This shows how concise and clear the code is using Monolith framework.
+'''
+
 @element()
 def examples(examples):
     @section(scope=examples)
