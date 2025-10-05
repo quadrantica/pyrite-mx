@@ -135,6 +135,10 @@ def examples(examples):
     @section(scope=examples)
     def ex5(ex5):
         '''
+        Note: real widgt instantiation, layout and configuration is done by the Monolith tk Layer. 
+        We must use the tkinit, tklayout and tkconfigure helpers to pass parameters to the widgets constructors and methods.
+        main_window function is called when the main window is created by the Monolith tk layer, after construction, configuration and layout.
+        Note that if one call main_window Scope as a function, it not createa new window, but configure and layout are applied again before original decorated funcion is called. Thanks to the Monolith tk Layer.  
         '''
         '''
         import tkinter as tk
