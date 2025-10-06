@@ -1,5 +1,6 @@
 from pyrite.monolith import element, section, routine
 from pyrite.monolith.layers import tk
+from PIL import Image, ImageTk  # I
 
 
 '''
@@ -180,6 +181,183 @@ def examples(examples):
                 pass
         tk.run()
 
+    @section(scope=examples)
+    def ex6(ex6):
+        '''
+        This example demonstrates how to create a main window with nested frames using the Monolith framework with Tkinter as the GUI layer.
+        Note that Monolith tk layer defaults to ttk widgets, so Frame is a ttk.Frame. To use tk.Frame, we must specify it explicitly using the type parameter.
+        As known, ttk.Frame does not support the background parameter, so we must use a style to set the background color.
+        The example shows how simply styles can be applied to widgets using the Monolith tk layer.
+        The original example quoted in the comment uses only tk.Frame, so the background parameter is used directly.
+        '''
+        '''
+        import tkinter as tk
+
+        root = tk.Tk()
+        root.title("Nested Frames")
+        root.config(bg="skyblue")
+
+        frame = tk.Frame(root, width=200, height=200)
+        frame.pack(padx=10, pady=10)
+
+        nested_frame = tk.Frame(frame, width=190, height=190, bg="red")
+        nested_frame.pack(padx=10, pady=10)
+
+        root.mainloop()        
+        '''
+        @element(scope=ex6, intents="main_window", type=tk.tktypes.AppWindow, init=tk.tkinit(title='ex6'), configure=tk.tkconfigure(bg="skyblue"), layer = tk.TkGuiLayer() )
+        def main_window(main_window):
+            main_window.minsize(300, 300)
+            main_window.geometry("300x300+50+50")
+
+            @element(scope=main_window, type=tk.tktypes.Frame, init=tk.tkinit(width=200, height=200), layout=tk.tklayout.pack(padx=10, pady=10))
+            def outer_frame(outer_frame):
+                @element(scope=outer_frame, type=tk.tktypes.Frame, init=tk.tkinit(width=190, height=190), style=tk.tkstyle(background="red"))
+                def inner_frame(inner_frame):
+                    pass
+
+        tk.run()
+
+    @section(scope=examples)
+    def ex7(ex7):
+        '''
+        import tkinter as tk
+        from tkinter import ttk
+
+        root = tk.Tk()
+        root.title("Image Editor")
+
+        image = tk.PhotoImage(file="forest.png")
+
+        # Tools frame
+        tools_frame = tk.Frame(root, width=200, height=400, bg="skyblue")
+        tools_frame.pack(padx=5, pady=5, side=tk.LEFT, fill=tk.Y)
+        tk.Label(
+            tools_frame,
+            text="Original Image",
+            bg="skyblue",
+        ).pack(padx=5, pady=5)
+        thumbnail_image = image.subsample(5, 5)
+        tk.Label(tools_frame, image=thumbnail_image).pack(padx=5, pady=5)
+
+        # Tools and Filters tabs
+        notebook = ttk.Notebook(tools_frame)
+        notebook.pack(expand=True, fill="both")
+
+        tools_tab = tk.Frame(notebook, bg="lightblue")
+        tools_var = tk.StringVar(value="None")
+        for tool in ["Resizing", "Rotating"]:
+            tk.Radiobutton(
+                tools_tab,
+                text=tool,
+                variable=tools_var,
+                value=tool,
+                bg="lightblue",
+            ).pack(anchor="w", padx=20, pady=5)
+
+        filters_tab = tk.Frame(notebook, bg="lightgreen")
+        filters_var = tk.StringVar(value="None")
+        for filter in ["Blurring", "Sharpening"]:
+            tk.Radiobutton(
+                filters_tab,
+                text=filter,
+                variable=filters_var,
+                value=filter,
+                bg="lightgreen",
+            ).pack(anchor="w", padx=20, pady=5)
+
+        notebook.add(tools_tab, text="Tools")
+        notebook.add(filters_tab, text="Filters")
+
+        # Image frame
+        image_frame = tk.Frame(root, width=400, height=400, bg="grey")
+        image_frame.pack(padx=5, pady=5, side=tk.RIGHT)
+        display_image = image.subsample(2, 2)
+        tk.Label(
+            image_frame,
+            text="Edited Image",
+            bg="grey",
+            fg="white",
+        ).pack(padx=5, pady=5)
+        tk.Label(image_frame, image=display_image).pack(padx=5, pady=5)
+
+        root.mainloop()            
+        '''
+
+        @element(scope=ex7, intents="main_window", type=tk.tktypes.AppWindow, init=tk.tkinit(title='ex7'), layer = tk.TkGuiLayer() )
+        def main_window(main_window):
+            main_window.minsize(600, 400)
+            main_window.geometry("600x400+50+50")
+
+            #@element(scope=main_window, type=tk.tktypes.PhotoImage, init=tk.tkinit(file="./examples/assets/pngimg.com - forest_PNG47.png"))
+            #def an_image(an_image):
+            #    pass
+            try:                
+                an_image = tk.tktypes.PhotoImage(Image.open("./examples/assets/pngimg.com - forest_PNG47.png"))
+                main_window.an_image = an_image  # Keep a reference to avoid garbage collection
+            except Exception as e:
+                print("Error loading image:", e)
+                an_image = tk.tktypes.PhotoImage()  # Create an empty PhotoImage if loading fails
+
+            @element(scope=main_window, type=tk.tktypes.Frame, init=tk.tkinit(width=200, height=400), style=tk.tkstyle(background="skyblue"), layout=tk.tklayout.pack(padx=5, pady=5, side="left", fill="y"))
+            def tools_frame(tools_frame):
+
+                @element(scope=tools_frame, type=tk.tktypes.Label, init=tk.tkinit(text="Original Image"), style=tk.tkstyle(background="skyblue"), layout=tk.tklayout.pack(padx=5, pady=5))
+                def label1(label1):
+                    pass
+
+                @element(scope=tools_frame, type=tk.tktypes.Label, init=tk.tkinit(image=an_image.subsample(5, 5)))
+                def thumbnail_label(thumbnail_label):
+                    pass
+
+                @element(scope=tools_frame, type=tk.tktypes.Notebook, layout=tk.tklayout.pack(expand=True, fill="both"))
+                def notebook__(notebook__):
+                    if True:
+                        @element(scope=notebook__, type=tk.tktypes.Frame, style=tk.tkstyle(background="lightblue"))
+                        def tools_tab(tools_tab):
+                            if True:
+                                #@element(scope=notebook, type=tk.tktypes.StringVar, init=tk.tkinit(value="None"))
+                                #def tools_var(tools_var):
+                                #    pass
+                                tools_var = tk.tktypes.StringVar(value="None")
+                                for tool in ["Resizing", "Rotating"]:
+                                    @element(scope=tools_tab, type=tk.tktypes.Radiobutton, init=tk.tkinit(text=tool, variable=tools_var, value=tool), style=tk.tkstyle(background="lightblue"), layout=tk.tklayout.pack(anchor="w", padx=20, pady=5))
+                                    def radiobutton(radiobutton):
+                                        pass
+
+                        @element(scope=notebook__, type=tk.tktypes.Frame, style=tk.tkstyle(background="lightgreen"))
+                        def filters_tab(filters_tab):
+                            if True:
+                                #@element(scope=notebook, type=tk.tktypes.StringVar, init=tk.tkinit(value="None"))
+                                #def filters_var(filters_var):
+                                #    pass
+                                filters_var = tk.tktypes.StringVar(value="None")
+                                    
+                                for i, filter in enumerate(["Blurring", "Sharpening"]):
+                                    @element(scope=filters_tab, clustering=i, type=tk.tktypes.Radiobutton, init=tk.tkinit(text=filter, variable=filters_var, value=filter), style=tk.tkstyle(background="lightgreen"), layout=tk.tklayout.pack(anchor="w", padx=20, pady=5))
+                                    def radiobutton(radiobutton):
+                                        pass
+
+                        #notebook__.__joint__.tool.add(tools_tab.__joint__.tool, text="Tools")
+                        #notebook__.__joint__.tool.add(filters_tab.__joint__.tool, text="Filters")
+
+            @element(scope=main_window, type=tk.tktypes.Frame, init=tk.tkinit(width=400, height=400), style=tk.tkstyle(background="grey"), layout=tk.tklayout.pack(padx=5, pady=5, side="right"))
+            def image_frame(image_frame):
+                @element(scope=image_frame, type=tk.tktypes.Label, init=tk.tkinit(text="Edited Image"), style=tk.tkstyle(background="grey", foreground="white"), layout=tk.tklayout.pack(padx=5, pady=5))
+                def label2(label2):
+                    pass
+                @element(scope=image_frame, type=tk.tktypes.Label, init=tk.tkinit(image=an_image.subsample(2, 2)), layout=tk.tklayout.pack(padx=5, pady=5))
+                def display_label(display_label):
+                    pass
+
+
+        main_window.tools_frame.notebook__.__joint__.tool.add(main_window.tools_frame.notebook__.tools_tab.__joint__.tool, text="Tools")
+        main_window.tools_frame.notebook__.__joint__.tool.add(main_window.tools_frame.notebook__.filters_tab.__joint__.tool, text="Filters")
+
+        tk.run()
+
+
+                                        
 
     
 
@@ -187,4 +365,6 @@ def examples(examples):
 #examples.ex2()
 #examples.ex3()
 #examples.ex4()
-examples.ex5()
+#examples.ex5()
+#examples.ex6()
+examples.ex7()
