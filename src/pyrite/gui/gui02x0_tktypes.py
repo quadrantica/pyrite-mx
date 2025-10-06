@@ -1,7 +1,9 @@
 from tkinter.font import Font
-from tkinter import (Variable, BooleanVar, IntVar, DoubleVar, StringVar, Menu, Listbox as ListBox, Listbox, LabelFrame, Text)
+from tkinter import (Variable, BooleanVar, IntVar, DoubleVar, StringVar, Menu, Listbox as ListBox, Listbox, 
+                     LabelFrame, Text, PanedWindow, Scale, PhotoImage)
 from tkinter.ttk import (Button, Entry, Frame, Label, Labelframe, LabeledScale, Radiobutton, Treeview,
-                         Checkbutton, Combobox, Scrollbar, Style, Separator, Menubutton, OptionMenu)
+                         Checkbutton, Combobox, Scrollbar, Style, Separator, Menubutton, OptionMenu, 
+                         Notebook, Progressbar, Sizegrip, Spinbox)
 
 from tkinter.ttk import (LabelFrame,
                          LabeledScale as Labeledscale, 
@@ -12,7 +14,10 @@ from tkinter.ttk import (LabelFrame,
                          Scrollbar as ScrollBar,
                          Menubutton as MenuButton,
                          OptionMenu as Optionmenu,
-                         Treeview as TreeView)
+                         Treeview as TreeView,
+                         Progressbar as ProgressBar, 
+                         Sizegrip as SizeGrip, 
+                         Spinbox as SpinBox)
 
 import tkinter.ttk as ttk
 import tkinter as tk
