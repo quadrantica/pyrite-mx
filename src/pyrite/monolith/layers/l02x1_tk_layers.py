@@ -63,7 +63,7 @@ class TkGuiLayer(Layer):
                 init_signature = builder.kwargs.get('init', None)
                 if init_signature:
                     method, args, kwargs = init_signature 
-                    this = builder.type(*args, **args)
+                    this = builder.type(*args, **kwargs)
                 else:
                     this = builder.type()
         else:
