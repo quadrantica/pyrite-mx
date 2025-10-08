@@ -8,6 +8,9 @@ Examples of Monolith with Tkinter layer
 Examples are inspired by https://realpython.com/python-gui-tkinter/#creating-a-simple-application-with-tkinter
 More Tkinter widgets: https://docs.python.org/3/library/tkinter.ttk.html#widget-classes
 More Tkinter layouts: https://docs.python.org/3/library/tkinter
+https://www.pythonguis.com/ 
+converted in monolith from raw tkiner code.
+
 All examples are orgnaized in sections, so you can run them one at a time by uncommenting the call at the bottom of this file.
 This shows how concise and clear the code is using Monolith framework.
 '''
@@ -334,7 +337,12 @@ def examples(examples):
                                 filters_var = tk.tktypes.StringVar(value="None")
                                     
                                 for i, filter in enumerate(["Blurring", "Sharpening"]):
-                                    @element(scope=filters_tab, clustering=i, type=tk.tktypes.Radiobutton, init=tk.tkinit(text=filter, variable=filters_var, value=filter), style=tk.tkstyle(background="lightgreen"), layout=tk.tklayout.pack(anchor="w", padx=20, pady=5))
+                                    @element(scope=filters_tab, 
+                                             clustering=i, 
+                                             type=tk.tktypes.Radiobutton, 
+                                             init=tk.tkinit(text=filter, variable=filters_var, value=filter), 
+                                             style=tk.tkstyle(background="lightgreen"), 
+                                             layout=tk.tklayout.pack(anchor="w", padx=20, pady=5))
                                     def radiobutton(radiobutton):
                                         pass
 
@@ -356,10 +364,291 @@ def examples(examples):
 
         tk.run()
 
+    @element(scope=examples)
+    def ex8_currency_converter(ex8):
 
-                                        
+        '''
+        import os
+        import sys
+        import tkinter as tk
+        import tkinter.ttk as ttk
+        from tkinter import messagebox
 
-    
+        import requests
+
+        API_KEY = os.getenv("API_KEY")
+        if API_KEY is None:
+            messagebox.showerror("API Key Error", "API_KEY environment variable is not set.")
+            sys.exit(1)
+
+        API_URL = f"https://v6.exchangerate-api.com/v6/{API_KEY}/"
+
+
+        class CurrencyConverterApp(tk.Tk):
+            def __init__(self):
+                super().__init__()
+                self.geometry("500x450+300+150")
+                self.title("Currency Converter")
+                self.resizable(width=0, height=0)
+                self.build_gui()
+
+            def build_gui(self):
+                self.logo = tk.PhotoImage(file="images/logo.png")
+                tk.Label(self, image=self.logo).pack()
+                frame = tk.Frame(self)
+                frame.pack()
+
+                from_label = ttk.Label(frame, text="From:")
+                from_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
+
+                to_label = ttk.Label(frame, text="To:")
+                to_label.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
+
+                self.from_combo = ttk.Combobox(frame)
+                self.from_combo.grid(row=1, column=0, padx=5, pady=5)
+
+                self.to_combo = ttk.Combobox(frame)
+                self.to_combo.grid(row=1, column=1, padx=5, pady=5)
+
+                amount_label = ttk.Label(frame, text="Amount:")
+                amount_label.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
+
+                self.amount_entry = ttk.Entry(frame)
+                self.amount_entry.insert(0, "1.00")
+                self.amount_entry.grid(
+                    row=3, column=0, columnspan=2, padx=5, pady=5, sticky=tk.W + tk.E
+                )
+
+                self.result_label = ttk.Label(font=("Arial", 20, "bold"))
+                self.result_label.pack()
+
+                convert_button = ttk.Button(
+                    self, text="Convert", width=20, command=self.convert
+                )
+                convert_button.pack()
+
+                currencies = self.get_currencies()
+
+                self.from_combo["values"] = currencies
+                self.from_combo.current(0)
+
+                self.to_combo["values"] = currencies
+                self.to_combo.current(0)
+
+            def get_currencies(self):
+                response = requests.get(f"{API_URL}/latest/USD")
+                data = response.json()
+                return list(data["conversion_rates"])
+
+            def convert(self):
+                src = self.from_combo.get()
+                dest = self.to_combo.get()
+                amount = self.amount_entry.get()
+                response = requests.get(f"{API_URL}/pair/{src}/{dest}/{amount}").json()
+                result = response["conversion_result"]
+                self.result_label.config(text=f"{amount} {src} = {result} {dest}")
+
+
+        if __name__ == "__main__":
+            app = CurrencyConverterApp()
+            app.mainloop(        
+        '''
+
+        import os
+        import sys
+        from tkinter import messagebox
+
+        import requests
+
+        API_KEY = os.getenv("API_KEY")
+        if API_KEY is None:
+            messagebox.showerror("API Key Error", "API_KEY environment variable is not set.")
+            sys.exit(1)
+
+        API_URL = f"https://v6.exchangerate-api.com/v6/{API_KEY}/"
+
+        @element(scope=ex8, intents="main_window", type=tk.tktypes.AppWindow, init=tk.tkinit(title='ex8'), layer = tk.TkGuiLayer() )
+        def main_window(main_window):
+            main_window.geometry("500x450+300+150")
+            main_window.title("Currency Converter")
+            main_window.resizable(width=0, height=0)
+
+            logo = tk.PhotoImage(file="images/logo.png")            
+            @element(scope=main_window,type=tk.tktype.Label, init=tk.tkinit(image=logo), layout=tk.tklayout.pack())
+            def logo_label(logo_label):
+                pass
+
+            @element(scope=main_window,type=tk.tktype.Frame, layout=tk.tklayout.pack())
+            def frame(frame):
+                pass
+                @element(scope=frame,type=tk.tktype.Label, init=tk.tkinit(text="From:"), 
+                         layout=tk.tklayout.grid(row=0, column=0, padx=5, pady=5, sticky="w"))
+                def from_label(from_label):
+                    pass
+                @element(scope=frame,type=tk.tktype.Label, init=tk.tkinit(text="To:"), 
+                         layout=tk.tklayout.grid(row=0, column=1, padx=5, pady=5, sticky="w"))
+                def to_label(to_label):
+                    pass
+                @element(scope=frame,type=tk.tktype.Label, init=tk.tkinit(text="To:"), 
+                         layout=tk.tklayout.grid(row=0, column=1, padx=5, pady=5, sticky="w"))
+                def to_label(to_label):
+                    pass
+                @element(scope=frame,type=tk.tktype.Label, init=tk.tkinit(text="From:"), 
+                         layout=tk.tklayout.grid(row=0, column=0, padx=5, pady=5, sticky="w"))
+                def from_label(from_label):
+                    pass    
+                @element(scope=frame,type=tk.tktypes.Label, init=tk.tkinit(text="Amount:"), 
+                         layout=tk.tklayout.grid(row=2, column=0, padx=5, pady=5, sticky="w"))
+                def amount_label(amount_label):
+                    pass
+                @element(scope=frame,type=tk.tktypes.Entry, init=tk.tkinit(), 
+                         layout=tk.tklayout.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="we"))
+                def amount_entry(amount_entry):
+                    pass
+                @element(scope=frame,type=tk.tktypes.Label,init=tk.tkinit(font=("Arial", 20, "bold")), 
+                         layout=tk.tklayout.pack())
+                def result_label(result_label):
+                    pass
+                
+                @element(scope=frame,type=tk.tktypes.Button, init=tk.tkinit(text="Convert", width=20), 
+                         layout=tk.tklayout.pack(), bind='command')
+                def convert_button(convert_button):
+                    src = from_combo.get()
+                    dest = to_combo.get()
+                    amount = amount_entry.get()
+                    response = requests.get(f"{API_URL}/pair/{src}/{dest}/{amount}").json()
+                    result = response["conversion_result"]
+                    result_label.config(text=f"{amount} {src} = {result} {dest}")
+
+                def get_currencies(self):
+                    response = requests.get(f"{API_URL}/latest/USD")
+                    data = response.json()
+                    return list(data["conversion_rates"])
+                
+                currencies = get_currencies()
+                @element(scope=frame,type=tk.tktypes.Combobox, init=tk.tkinit(values=currencies), 
+                         layout=tk.tklayout.grid(row=1, column=0, padx=5, pady=5))
+                def from_combo(from_combo):
+                    from_combo.current(0)
+                
+                @element(scope=frame,type=tk.tktypes.Combobox, init=tk.tkinit(values=currencies), 
+                         layout=tk.tklayout.grid(row=1, column=1, padx=5, pady=5))
+                def to_combo(to_combo):
+                    to_combo.current(0)
+
+        tk.run()      
+
+    @element(scope=ex9, intents="main_window", type=tk.tktypes.AppWindow, init=tk.tkinit(title='ex9'), layer = tk.TkGuiLayer() )
+    def ex9(ex9):
+        from tkinter.messagebox import showerror
+        from tkinter.scrolledtext import ScrolledText
+        import httpcore
+        from openai import OpenAI
+
+        LANGUAGES = [
+            "English", "Mandarin Chinese", "Hindi", "Spanish", "French",
+            "Standard Arabic", "Bengali", "Russian", "Portuguese", "Urdu", "Dutch"
+        ]
+        DEFAULT_SOURCE = "English"
+        DEFAULT_DEST = "Dutch"
+
+        client = OpenAI(api_key="<YOUR API KEY HERE>")
+
+        @element(scope=ex9)
+        def translator_app(translator_app):
+
+            @section(scope=translator_app)
+            def translator(translator):
+
+                @element(scope=translator, intents="main_window", type=tk.tktypes.AppWindow,
+                        init=tk.tkinit(title="Language Translator"),
+                        configure=tk.tkconfigure(resizable=(False, False)),
+                        layer=tk.TkGuiLayer())
+                def main_window(main_window):
+
+                    @element(scope=main_window, type=tk.tktypes.Frame,
+                            layout=tk.tklayout.pack(padx=10, pady=10))
+                    def frame(frame):
+
+                        @element(scope=frame, type=tk.tktypes.PhotoImage,
+                                init=tk.tkinit(file="images/logo.png"))
+                        def logo_image(logo_image): pass
+
+                        @element(scope=frame, type=tk.tktypes.Label,
+                                init=tk.tkinit(image=frame.logo_image),
+                                layout=tk.tklayout.grid(row=0, column=0, sticky="w"))
+                        def logo_label(logo_label): pass
+
+                        @element(scope=frame, type=tk.tktypes.Combobox,
+                                init=tk.tkinit(values=LANGUAGES),
+                                layout=tk.tklayout.grid(row=1, column=0, sticky="we"))
+                        def from_language(from_language):
+                            from_language.current(LANGUAGES.index(DEFAULT_SOURCE))
+
+                        @element(scope=frame, type=tk.tktypes.PhotoImage,
+                                init=tk.tkinit(file="images/arrow.png"))
+                        def arrow_image(arrow_image): pass
+
+                        @element(scope=frame, type=tk.tktypes.Label,
+                                init=tk.tkinit(image=frame.arrow_image.subsample(15, 15)),
+                                layout=tk.tklayout.grid(row=1, column=1))
+                        def arrow_label(arrow_label): pass
+
+                        @element(scope=frame, type=tk.tktypes.Combobox,
+                                init=tk.tkinit(values=LANGUAGES),
+                                layout=tk.tklayout.grid(row=1, column=2, sticky="we"))
+                        def to_language(to_language):
+                            to_language.current(LANGUAGES.index(DEFAULT_DEST))
+
+                        @element(scope=frame, type=tk.tktypes.ScrolledText,
+                                init=tk.tkinit(font=("Dotum", 16), width=50, height=20),
+                                layout=tk.tklayout.grid(row=2, column=0))
+                        def from_text(from_text): pass
+
+                        @element(scope=frame, type=tk.tktypes.ScrolledText,
+                                init=tk.tkinit(font=("Dotum", 16), width=50, height=20, state="disabled"),
+                                layout=tk.tklayout.grid(row=2, column=2))
+                        def to_text(to_text): pass
+
+                        @element(scope=frame, type=tk.tktypes.Button,
+                                init=tk.tkinit(text="Translate"),
+                                layout=tk.tklayout.grid(row=3, column=0, columnspan=3, pady=10),
+                                bind="command")
+                        def translate_button(translate_button):
+
+                            source_language = frame.from_language.get()
+                            destination_language = frame.to_language.get()
+                            text = frame.from_text.get("1.0", "end").strip()
+
+                            try:
+                                completion = client.chat.completions.create(
+                                    messages=[
+                                        {"role": "system", "content": "You are a language interpreter."},
+                                        {
+                                            "role": "user",
+                                            "content": (
+                                                f"Translate the following text from {source_language} "
+                                                f"to {destination_language}, only reply with the text: "
+                                                f"{text}"
+                                            ),
+                                        },
+                                    ],
+                                    model="gpt-3.5-turbo",
+                                )
+                                reply = completion.choices[0].message.content
+                            except httpcore.ConnectError:
+                                showerror(title="Error", message="Make sure you have an internet connection")
+                                return
+                            except Exception as e:
+                                showerror(title="Error", message=f"An unexpected error occurred: {e}")
+                                return
+
+                            frame.to_text.config(state="normal")
+                            frame.to_text.delete("1.0", "end")
+                            frame.to_text.insert("end", reply)
+                            frame.to_text.config(state="disabled")
+
+        tk.run()
 
 #examples.ex1()
 #examples.ex2()
@@ -368,3 +657,4 @@ def examples(examples):
 #examples.ex5()
 #examples.ex6()
 examples.ex7()
+
