@@ -142,10 +142,7 @@ For those with curiosity, patience, and skill, here lies a slightly usable  **Mo
 
 > **Pyrite-MX**: *Focus only on what truly matters. No boilerplate. No distractions.*
 
-
-
-
-
+---
 
 # **External Perspective: Monolith as a Linguistic System of Scoped Intent**
 
