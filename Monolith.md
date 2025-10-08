@@ -147,7 +147,7 @@ For those with curiosity, patience, and skill, here lies a slightly usable  **Mo
 
 
 
-### **External Perspective: Monolith as a Linguistic System of Scoped Intent**
+# **External Perspective: Monolith as a Linguistic System of Scoped Intent**
 
 From a foundational standpoint, Monolith can be interpreted as a **language system** that encodes  **intent through scoped graph composition** . It does not represent a framework for a specific domain, but rather a **syntax for expressing relationships** between units of meaning. Each decorator (`@element`, `@section`, `@feature`, `@routine`) acts as a linguistic marker, assigning semantic roles to functions within a nested hierarchy.
 
