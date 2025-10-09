@@ -642,7 +642,7 @@ Monolith is not a GUI framework. It is a **semantic companion** that:
 
 ---
 
-## **Monolith: A Semantic Graph for Complex Workflows**
+# **Monolith: A Semantic Graph for Complex Workflows**
 
 ### 🧭 Introduction
 
