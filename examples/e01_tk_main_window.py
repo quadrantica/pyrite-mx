@@ -1,4 +1,4 @@
-from pyrite.monolith import element, section, routine
+from pyrite.monolith import element, section, routine, feature, cluster
 from pyrite.monolith.layers import tk
 from PIL import Image, ImageTk  # I
 
