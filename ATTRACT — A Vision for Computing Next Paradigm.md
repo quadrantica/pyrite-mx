@@ -19,7 +19,7 @@ For fifty years, we've organized digital life around  **space** : files in folde
 
 But human experience doesn't work this way.
 
-We live in  **time** . We remember in  **context** . We think in  **relation** .
+We live in  **time**. We remember in  **context**. We think in  **relation**.
 
 When someone asks "what were you working on last Tuesday?" you don't think "it's in folder X, subfolder Y." You think: "I was at the café, talking with Anna about urban design, sketching ideas for the Tokyo project."
 
@@ -163,7 +163,7 @@ Documents reopen at the same paragraphs.
 
 Your workspace reconstructs itself.
 
-You're  **back in that moment** —not remembering it,  **inhabiting it** .
+You're  **back in that moment** —not remembering it,  **inhabiting it**.
 
 ---
 
@@ -243,7 +243,7 @@ Her reference tabs restore.
 
 Her notes reappear at the same paragraph.
 
-She's  **back in yesterday's flow** , instantly.
+She's  **back in yesterday's flow**, instantly.
 
 She continues working as if no time passed.
 
@@ -300,7 +300,7 @@ She scrolls her day—a flowing narrative:
 
 This is not productivity theater.
 
-This is  **life made legible** .
+This is  **life made legible**.
 
 ---
 
