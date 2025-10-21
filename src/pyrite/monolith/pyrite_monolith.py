@@ -85,9 +85,9 @@ class Joint:
                         return scope
                 else:
                     return self.scope
-            def divert_scope(self, mold, molded):
+            def divert_scope(self, mold, cast):
                 if self.scope is mold:
-                    return self.select_scope(molded)
+                    return self.select_scope(cast)
                 else:
                     return self.scope
         _scope.__joint__.add_referrer('Wrapper',WrapperType)
@@ -276,24 +276,32 @@ class Joint:
             wrapper = final_wrapper
             target = item
         else:
-            final_wrapper, _list = final_host.__joint__.routines[final_host.__name__]
-            class FeatureWrapper(Joint.Wrapper(scope,item,molded=None)):
+            final_wrapper, _list = final_host.__joint__.routines[final_host.__joint__.name]
+            class FeatureWrapper(Joint.Wrapper(scope,item,cast=None)):
                 def __call__(self, __scope=None, *args, **kwargs):                    
-                    if self.molded is not None:                      
+                    if self.cast is not None:                      
                         _scope = self.scope  
                         _joint = _scope.__joint__
                         _joint.counter += 1
                         joint = Joint(name=_joint.name, pool=_joint.pool,base=_joint.base,
                                       mass=_joint.mass,call=_joint.call,call2=_joint.call2,this=_joint.this,
-                                      overrides=_joint.overrides, host=self.molded, mold=_scope, tag=f'{_joint.tag}#{_joint.counter}')
+                                      overrides=_joint.overrides, host=self.cast, mold=_scope, tag=f'{_joint.tag}#{_joint.counter}')
                         scope = type(_scope)(joint)
                         with scope:
                             res = self.callee(scope,*args,**kwargs)                
                             if res is not None:
                                 pass 
             _list.append(FeatureWrapper)
+
+            if hasattr(final_host.__joint__,'casts'):
+                for cast in final_host.__joint__.casts:
+                    wrapper = FeatureWrapper(cast=cast)                                        
+                    with cast as scope:
+                        wrapper(scope,*final_host.__joint__.args,**final_host.__joint__.kwargs)
+
             wrapper = final_wrapper
             target = item
+
         def simple_wrapper(scope, *args, **kwargs):
             with scope:
                 helper(scope,*args,**kwargs)
@@ -387,11 +395,16 @@ class Joint:
                         joint = Joint(name=_joint.name, pool=_joint.pool,base=_joint.base,mass=_joint.mass,
                                     call=_joint.call,this=_joint.this,host=_joint.host,mold=mold,
                                     tag=f'{_joint.tag}#{_joint.counter}') 
-                        molded = type(mold)(joint)
+                        cast = type(mold)(joint)
+                        if not hasattr(_joint,'casts'):
+                            _joint.casts = []
+                        _joint.casts.append(cast)
+                        _joint.args = args
+                        _joint.kwargs = kwargs
                         _, _list = mold.__joint__.routines[self.final_name]
                         for Wrapper in _list:
-                            wrapper = Wrapper(molded=molded)                                        
-                            with wrapper.divert_scope(mold, molded) as scope:
+                            wrapper = Wrapper(cast=cast)                                        
+                            with wrapper.divert_scope(mold, cast) as scope:
                                 wrapper(scope,*args,**kwargs)
             cluster_wrapper = ClusterAccessor()
             self.routines[final_name] = (cluster_wrapper, [ClusterWrapper])
@@ -748,13 +761,16 @@ class ClusterBuilder:
     def build(self):
         scope = self.scope
         item = self.item
-        if type(self.type) is type:       
-            this = self.type()     
-        else:
-            if type(item) is type:
-                this = item()     
-            else:
-                this = item
+        this = self.layer.item_build(self)
+        #if type(self.type) is type:       
+        #    this = self.type()     
+        #else:
+        #    if type(item) is type:
+        #        this = item()     
+        #    else:
+        #        this = item
+        scope.__joint__.args = self.args
+        scope.__joint__.kwargs = self.kwargs
         scope.__joint__.call2 = self.helper.wrapper
         scope.__joint__.call = self.wrapper
         scope.__joint__.this = this
@@ -822,13 +838,14 @@ class FeatureBuilder:
     def build(self):
         scope = self.scope
         item = self.item
-        if type(self.type) is type:       
-            this = self.type()     
-        else:
-            if type(item) is type:
-                this = item()     
-            else:
-                this = item
+        this = self.layer.item_build(self)
+        #if type(self.type) is type:       
+        #    this = self.type()     
+        #else:
+        #    if type(item) is type:
+        #        this = item()     
+        #    else:
+        #        this = item
         scope.__joint__.call2 = self.helper.wrapper
         scope.__joint__.call = self.wrapper
         scope.__joint__.this = this
